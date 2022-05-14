@@ -1,10 +1,8 @@
 # 对 FastAPI 同步写法进行压测
 
-参考：<https://blog.csdn.net/qq_29518275/article/details/109360617>
-
 [压力测试样例代码](/test/stress_test_fastapi_async_sync.py)
 
-压力测试：
+压力测试结果：
 
 ```console
 wuwenxiangs-MacBook-Pro:test wuwenxiang$ ab -n 100 -c 100 http://localhost:8000/a
