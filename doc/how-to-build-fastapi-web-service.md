@@ -85,3 +85,275 @@
 5. Logging 处理
 
 ## 2. 搭建步骤
+
+### 2.1 框架搭建
+
+参考：<https://github.com/tiangolo/full-stack-fastapi-couchbase>
+
+```bash
+pip install cookiecutter
+cookiecutter https://github.com/tiangolo/full-stack-fastapi-couchbase
+```
+
+输入参数：
+
+```console
+project_name [Base Project]: fastapi-demo
+project_slug [fastapi-demo]: 
+domain_main [fastapi-demo.com]: 
+domain_staging [stag.fastapi-demo.com]: 
+docker_swarm_stack_name_main [fastapi-demo-com]: 
+docker_swarm_stack_name_staging [stag-fastapi-demo-com]: 
+secret_key [changethis]: 8861610eceb544c69098cb38c351e764
+first_superuser [admin@fastapi-demo.com]: 
+first_superuser_password [changethis]: 4dc2863ed5c24f4ebc410d28b5092d4c
+backend_cors_origins [http://localhost, http://localhost:4200, http://localhost:3000, http://localhost:8080, https://localhost, https://localhost:4200, https://localhost:3000, https://localhost:8080, http://dev.fastapi-demo.com, https://stag.fastapi-demo.com, https://fastapi-demo.com, http://local.dockertoolbox.tiangolo.com, http://localhost.tiangolo.com]: 
+smtp_port [587]: 
+smtp_host []: 
+smtp_user []: 
+smtp_password []: 
+smtp_emails_from_email [info@fastapi-demo.com]: 
+couchbase_user [admin]: 
+couchbase_password [changethis]: 081eb822042145778267b30eea0438ab
+couchbase_sync_gateway_cors [http://localhost:4984, http://localhost:4985, http://localhost, http://localhost:4200, http://localhost:3000, http://localhost:8080, http://dev.fastapi-demo.com, https://stag.fastapi-demo.com, https://db.stag.fastapi-demo.com, https://fastapi-demo.com, https://db.fastapi-demo.com, http://local.dockertoolbox.tiangolo.com, http://local.dockertoolbox.tiangolo.com:4984, http://localhost.tiangolo.com, http://localhost.tiangolo.com:4984]: 
+couchbase_sync_gateway_user [sync]: 
+couchbase_sync_gateway_password [changethis]: 12e3d124c6bb42158667f830f123df15
+traefik_constraint_tag [fastapi-demo.com]: 
+traefik_constraint_tag_staging [stag.fastapi-demo.com]: 
+traefik_public_network [traefik-public]: 
+traefik_public_constraint_tag [traefik-public]: 
+flower_auth [admin:4dc2863ed5c24f4ebc410d28b5092d4c]: 
+sentry_dsn []: 
+docker_image_prefix []: 
+docker_image_backend [backend]: 
+docker_image_celeryworker [celeryworker]: 
+docker_image_frontend [frontend]: 
+docker_image_sync_gateway [sync-gateway]: 
+```
+
+```
+$ tree fastapi-demo
+fastapi-demo
+├── README.md
+├── backend
+│   ├── app
+│   │   ├── Pipfile
+│   │   ├── app
+│   │   │   ├── __init__.py
+│   │   │   ├── api
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── api_v1
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── api.py
+│   │   │   │   │   └── endpoints
+│   │   │   │   │       ├── __init__.py
+│   │   │   │   │       ├── items.py
+│   │   │   │   │       ├── login.py
+│   │   │   │   │       ├── roles.py
+│   │   │   │   │       ├── users.py
+│   │   │   │   │       └── utils.py
+│   │   │   │   └── utils
+│   │   │   │       ├── __init__.py
+│   │   │   │       └── security.py
+│   │   │   ├── backend_pre_start.py
+│   │   │   ├── celeryworker_pre_start.py
+│   │   │   ├── core
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── celery_app.py
+│   │   │   │   ├── config.py
+│   │   │   │   ├── jwt.py
+│   │   │   │   └── security.py
+│   │   │   ├── crud
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── item.py
+│   │   │   │   ├── user.py
+│   │   │   │   └── utils.py
+│   │   │   ├── db
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── couchbase_utils.py
+│   │   │   │   ├── database.py
+│   │   │   │   ├── full_text_search_utils.py
+│   │   │   │   └── init_db.py
+│   │   │   ├── email-templates
+│   │   │   │   ├── build
+│   │   │   │   │   ├── new_account.html
+│   │   │   │   │   ├── reset_password.html
+│   │   │   │   │   └── test_email.html
+│   │   │   │   └── src
+│   │   │   │       ├── new_account.mjml
+│   │   │   │       ├── reset_password.mjml
+│   │   │   │       └── test_email.mjml
+│   │   │   ├── main.py
+│   │   │   ├── models
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── config.py
+│   │   │   │   ├── item.py
+│   │   │   │   ├── msg.py
+│   │   │   │   ├── role.py
+│   │   │   │   ├── token.py
+│   │   │   │   └── user.py
+│   │   │   ├── search_index_definitions
+│   │   │   │   ├── items.json
+│   │   │   │   ├── items_01.json
+│   │   │   │   ├── users.json
+│   │   │   │   └── users_01.json
+│   │   │   ├── tests
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── api
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── api_v1
+│   │   │   │   │       ├── __init__.py
+│   │   │   │   │       ├── test_celery.py
+│   │   │   │   │       ├── test_items.py
+│   │   │   │   │       ├── test_login.py
+│   │   │   │   │       └── test_users.py
+│   │   │   │   ├── conftest.py
+│   │   │   │   ├── crud
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── test_get_ids.py
+│   │   │   │   │   ├── test_item.py
+│   │   │   │   │   └── test_user.py
+│   │   │   │   └── utils
+│   │   │   │       ├── __init__.py
+│   │   │   │       ├── item.py
+│   │   │   │       ├── user.py
+│   │   │   │       └── utils.py
+│   │   │   ├── tests_pre_start.py
+│   │   │   ├── utils.py
+│   │   │   └── worker.py
+│   │   ├── prestart.sh
+│   │   ├── scripts
+│   │   │   └── lint.sh
+│   │   ├── tests-start.sh
+│   │   └── worker-start.sh
+│   ├── backend.dockerfile
+│   ├── celeryworker.dockerfile
+│   └── tests.dockerfile
+├── cookiecutter-config-file.yml
+├── docker-compose.deploy.build.yml
+├── docker-compose.deploy.command.yml
+├── docker-compose.deploy.images.yml
+├── docker-compose.deploy.labels.yml
+├── docker-compose.deploy.networks.yml
+├── docker-compose.deploy.volumes-placement.yml
+├── docker-compose.dev.build.yml
+├── docker-compose.dev.command.yml
+├── docker-compose.dev.env.yml
+├── docker-compose.dev.labels.yml
+├── docker-compose.dev.networks.yml
+├── docker-compose.dev.ports.yml
+├── docker-compose.dev.volumes.yml
+├── docker-compose.shared.admin.yml
+├── docker-compose.shared.base-images.yml
+├── docker-compose.shared.depends.yml
+├── docker-compose.shared.env.yml
+├── docker-compose.test.yml
+├── env-backend.env
+├── env-couchbase.env
+├── env-flower.env
+├── env-sync-gateway.env
+├── frontend
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── babel.config.js
+│   ├── nginx-backend-not-found.conf
+│   ├── package.json
+│   ├── public
+│   │   ├── favicon.ico
+│   │   ├── img
+│   │   │   └── icons
+│   │   │       ├── android-chrome-192x192.png
+│   │   │       ├── android-chrome-512x512.png
+│   │   │       ├── apple-touch-icon-120x120.png
+│   │   │       ├── apple-touch-icon-152x152.png
+│   │   │       ├── apple-touch-icon-180x180.png
+│   │   │       ├── apple-touch-icon-60x60.png
+│   │   │       ├── apple-touch-icon-76x76.png
+│   │   │       ├── apple-touch-icon.png
+│   │   │       ├── favicon-16x16.png
+│   │   │       ├── favicon-32x32.png
+│   │   │       ├── msapplication-icon-144x144.png
+│   │   │       ├── mstile-150x150.png
+│   │   │       └── safari-pinned-tab.svg
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── api.ts
+│   │   ├── assets
+│   │   │   └── logo.png
+│   │   ├── component-hooks.ts
+│   │   ├── components
+│   │   │   ├── NotificationsManager.vue
+│   │   │   ├── RouterComponent.vue
+│   │   │   └── UploadButton.vue
+│   │   ├── env.ts
+│   │   ├── interfaces
+│   │   │   └── index.ts
+│   │   ├── main.ts
+│   │   ├── plugins
+│   │   │   ├── vee-validate.ts
+│   │   │   └── vuetify.ts
+│   │   ├── registerServiceWorker.ts
+│   │   ├── router.ts
+│   │   ├── shims-tsx.d.ts
+│   │   ├── shims-vue.d.ts
+│   │   ├── store
+│   │   │   ├── admin
+│   │   │   │   ├── actions.ts
+│   │   │   │   ├── getters.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── mutations.ts
+│   │   │   │   └── state.ts
+│   │   │   ├── index.ts
+│   │   │   ├── main
+│   │   │   │   ├── actions.ts
+│   │   │   │   ├── getters.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── mutations.ts
+│   │   │   │   └── state.ts
+│   │   │   └── state.ts
+│   │   ├── utils.ts
+│   │   └── views
+│   │       ├── Login.vue
+│   │       ├── PasswordRecovery.vue
+│   │       ├── ResetPassword.vue
+│   │       └── main
+│   │           ├── Dashboard.vue
+│   │           ├── Main.vue
+│   │           ├── Start.vue
+│   │           ├── admin
+│   │           │   ├── Admin.vue
+│   │           │   ├── AdminUsers.vue
+│   │           │   ├── CreateUser.vue
+│   │           │   └── EditUser.vue
+│   │           └── profile
+│   │               ├── UserProfile.vue
+│   │               ├── UserProfileEdit.vue
+│   │               └── UserProfileEditPassword.vue
+│   ├── tests
+│   │   └── unit
+│   │       └── upload-button.spec.ts
+│   ├── tsconfig.json
+│   ├── tslint.json
+│   └── vue.config.js
+├── scripts
+│   ├── build-push.sh
+│   ├── build.sh
+│   ├── deploy.sh
+│   ├── test-local.sh
+│   └── test.sh
+└── sync-gateway
+    ├── Dockerfile
+    ├── create_config.py
+    ├── entrypoint.sh
+    └── sync
+        └── sync-function.js
+
+42 directories, 174 files
+```
+
+重命名为 `fastapi-demo-template`
+
+### 2.2 
