@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pyjwt
+python-multipart
+email-validator
+requests
+celery
+passlib
+tenacity
+pydantic
+emails
+raven
+jinja2
