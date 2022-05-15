@@ -2,8 +2,8 @@ from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
-from app.models.config import USERPROFILE_DOC_TYPE
-from app.models.role import RoleEnum
+from fastapi_demo.models.config import USERPROFILE_DOC_TYPE
+from fastapi_demo.models.role import RoleEnum
 
 
 # Shared properties in Couchbase and Sync Gateway

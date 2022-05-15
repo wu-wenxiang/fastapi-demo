@@ -1,8 +1,8 @@
 import requests
 
-from app.core import config
-from app.tests.utils.item import create_random_item
-from app.tests.utils.utils import get_server_api
+from fastapi_demo.core import config
+from fastapi_demo.tests.utils.item import create_random_item
+from fastapi_demo.tests.utils.utils import get_server_api
 
 
 def test_create_item(superuser_token_headers):

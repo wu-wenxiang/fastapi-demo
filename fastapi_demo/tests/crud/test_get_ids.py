@@ -1,4 +1,4 @@
-from app import crud
+from fastapi_demo import crud
 
 
 def test_get_user_id():

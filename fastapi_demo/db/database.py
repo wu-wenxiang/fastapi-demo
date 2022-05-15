@@ -2,7 +2,7 @@ from couchbase import LOCKMODE_WAIT
 from couchbase.bucket import Bucket
 from couchbase.cluster import Cluster, PasswordAuthenticator
 
-from app.core.config import (
+from fastapi_demo.core.config import (
     COUCHBASE_BUCKET_NAME,
     COUCHBASE_HOST,
     COUCHBASE_N1QL_TIMEOUT_SECS,
@@ -11,7 +11,7 @@ from app.core.config import (
     COUCHBASE_PORT,
     COUCHBASE_USER,
 )
-from app.db.couchbase_utils import get_cluster_couchbase_url
+from fastapi_demo.db.couchbase_utils import get_cluster_couchbase_url
 
 
 def get_default_bucket():

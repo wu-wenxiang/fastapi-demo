@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import jwt
 
-from app.core import config
+from fastapi_demo.core import config
 
 ALGORITHM = "HS256"
 access_token_jwt_subject = "access"

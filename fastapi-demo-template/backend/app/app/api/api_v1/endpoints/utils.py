@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from pydantic.networks import EmailStr
 
-from app.api.utils.security import get_current_active_superuser
-from app.core.celery_app import celery_app
-from app.models.msg import Msg
-from app.models.user import UserInDB
-from app.utils import send_test_email
+from fastapi_demo.api.utils.security import get_current_active_superuser
+from fastapi_demo.core.celery_app import celery_app
+from fastapi_demo.models.msg import Msg
+from fastapi_demo.models.user import UserInDB
+from fastapi_demo.utils import send_test_email
 
 router = APIRouter()
 

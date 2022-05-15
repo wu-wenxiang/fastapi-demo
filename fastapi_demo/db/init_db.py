@@ -1,21 +1,21 @@
 import logging
 
-from app import crud
-from app.core import config
-from app.db.couchbase_utils import (
+from fastapi_demo import crud
+from fastapi_demo.core import config
+from fastapi_demo.db.couchbase_utils import (
     config_couchbase,
     ensure_create_bucket,
     ensure_create_couchbase_user,
     get_cluster_http_url,
 )
-from app.db.database import (
+from fastapi_demo.db.database import (
     ensure_create_primary_index,
     ensure_create_type_index,
     get_bucket,
 )
-from app.db.full_text_search_utils import ensure_create_full_text_indexes
-from app.models.role import RoleEnum
-from app.models.user import UserCreate
+from fastapi_demo.db.full_text_search_utils import ensure_create_full_text_indexes
+from fastapi_demo.models.role import RoleEnum
+from fastapi_demo.models.user import UserCreate
 
 
 def init_db():

@@ -3,12 +3,12 @@ from typing import List
 from fastapi import APIRouter, Body, Depends, HTTPException
 from pydantic.networks import EmailStr
 
-from app import crud
-from app.api.utils.security import get_current_active_superuser, get_current_active_user
-from app.core import config
-from app.db.database import get_default_bucket
-from app.models.user import User, UserCreate, UserInDB, UserUpdate
-from app.utils import send_new_account_email
+from fastapi_demo import crud
+from fastapi_demo.api.utils.security import get_current_active_superuser, get_current_active_user
+from fastapi_demo.core import config
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.user import User, UserCreate, UserInDB, UserUpdate
+from fastapi_demo.utils import send_new_account_email
 
 router = APIRouter()
 

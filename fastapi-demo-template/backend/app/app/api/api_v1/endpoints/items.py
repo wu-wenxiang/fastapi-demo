@@ -2,11 +2,11 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from app import crud
-from app.api.utils.security import get_current_active_user
-from app.db.database import get_default_bucket
-from app.models.item import Item, ItemCreate, ItemUpdate
-from app.models.user import UserInDB
+from fastapi_demo import crud
+from fastapi_demo.api.utils.security import get_current_active_user
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.item import Item, ItemCreate, ItemUpdate
+from fastapi_demo.models.user import UserInDB
 
 router = APIRouter()
 

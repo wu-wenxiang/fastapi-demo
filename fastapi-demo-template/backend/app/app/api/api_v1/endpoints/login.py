@@ -3,15 +3,15 @@ from datetime import timedelta
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app import crud
-from app.api.utils.security import get_current_user
-from app.core import config
-from app.core.jwt import create_access_token
-from app.db.database import get_default_bucket
-from app.models.msg import Msg
-from app.models.token import Token
-from app.models.user import User, UserInDB, UserUpdate
-from app.utils import (
+from fastapi_demo import crud
+from fastapi_demo.api.utils.security import get_current_user
+from fastapi_demo.core import config
+from fastapi_demo.core.jwt import create_access_token
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.msg import Msg
+from fastapi_demo.models.token import Token
+from fastapi_demo.models.user import User, UserInDB, UserUpdate
+from fastapi_demo.utils import (
     generate_password_reset_token,
     send_reset_password_email,
     verify_password_reset_token,

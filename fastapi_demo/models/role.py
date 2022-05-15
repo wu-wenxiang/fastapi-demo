@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from app.core.config import ROLE_SUPERUSER
+from fastapi_demo.core.config import ROLE_SUPERUSER
 
 
 class RoleEnum(Enum):

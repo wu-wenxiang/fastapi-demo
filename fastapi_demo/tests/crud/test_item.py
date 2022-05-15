@@ -1,9 +1,9 @@
-from app import crud
-from app.db.database import get_default_bucket
-from app.models.config import ITEM_DOC_TYPE
-from app.models.item import ItemCreate, ItemUpdate
-from app.tests.utils.user import create_random_user
-from app.tests.utils.utils import random_lower_string
+from fastapi_demo import crud
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.config import ITEM_DOC_TYPE
+from fastapi_demo.models.item import ItemCreate, ItemUpdate
+from fastapi_demo.tests.utils.user import create_random_user
+from fastapi_demo.tests.utils.utils import random_lower_string
 
 
 def test_create_item():

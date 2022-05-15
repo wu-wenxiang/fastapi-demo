@@ -5,7 +5,7 @@ from typing import Any, Dict
 import requests
 from requests.auth import HTTPBasicAuth
 
-from app.core.config import (
+from fastapi_demo.core.config import (
     COUCHBASE_FULL_TEXT_INDEX_DEFINITIONS_DIR,
     COUCHBASE_PASSWORD,
     COUCHBASE_USER,

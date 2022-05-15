@@ -1,7 +1,7 @@
 from raven import Client
 
-from app.core import config
-from app.core.celery_app import celery_app
+from fastapi_demo.core import config
+from fastapi_demo.core.celery_app import celery_app
 
 client_sentry = Client(config.SENTRY_DSN)
 

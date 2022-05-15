@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 
-from app import crud
-from app.api.utils.security import get_current_active_superuser
-from app.models.role import RoleEnum, Roles
-from app.models.user import UserInDB
+from fastapi_demo import crud
+from fastapi_demo.api.utils.security import get_current_active_superuser
+from fastapi_demo.models.role import RoleEnum, Roles
+from fastapi_demo.models.user import UserInDB
 
 router = APIRouter()
 

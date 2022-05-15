@@ -1,10 +1,10 @@
 import requests
 
-from app import crud
-from app.core import config
-from app.db.database import get_default_bucket
-from app.models.user import UserCreate, UserUpdate
-from app.tests.utils.utils import random_lower_string, get_server_api
+from fastapi_demo import crud
+from fastapi_demo.core import config
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.user import UserCreate, UserUpdate
+from fastapi_demo.tests.utils.utils import random_lower_string, get_server_api
 
 
 def user_authentication_headers(server_api, email, password):

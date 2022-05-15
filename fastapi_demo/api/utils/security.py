@@ -4,12 +4,12 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError
 from starlette.status import HTTP_403_FORBIDDEN
 
-from app import crud
-from app.core import config
-from app.core.jwt import ALGORITHM
-from app.db.database import get_default_bucket
-from app.models.token import TokenPayload
-from app.models.user import UserInDB
+from fastapi_demo import crud
+from fastapi_demo.core import config
+from fastapi_demo.core.jwt import ALGORITHM
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.token import TokenPayload
+from fastapi_demo.models.user import UserInDB
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/api/v1/login/access-token")
 

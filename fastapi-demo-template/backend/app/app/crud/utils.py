@@ -9,7 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from pydantic.fields import Field, SHAPE_LIST, SHAPE_SET, SHAPE_TUPLE
 
-from app.core import config
+from fastapi_demo.core import config
 
 PydanticModel = TypeVar("PydanticModel", bound=BaseModel)
 

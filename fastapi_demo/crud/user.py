@@ -3,11 +3,11 @@ from couchbase.bucket import Bucket
 from couchbase.n1ql import CONSISTENCY_REQUEST, N1QLQuery
 from fastapi.encoders import jsonable_encoder
 
-from app.core import config
-from app.core.security import get_password_hash, verify_password
-from app.models.config import USERPROFILE_DOC_TYPE
-from app.models.role import RoleEnum
-from app.models.user import UserCreate, UserInDB, UserSyncIn, UserUpdate
+from fastapi_demo.core import config
+from fastapi_demo.core.security import get_password_hash, verify_password
+from fastapi_demo.models.config import USERPROFILE_DOC_TYPE
+from fastapi_demo.models.role import RoleEnum
+from fastapi_demo.models.user import UserCreate, UserInDB, UserSyncIn, UserUpdate
 
 from . import utils
 

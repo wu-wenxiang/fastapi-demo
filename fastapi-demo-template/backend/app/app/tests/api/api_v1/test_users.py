@@ -1,11 +1,11 @@
 import requests
 
-from app import crud
-from app.core import config
-from app.db.database import get_default_bucket
-from app.models.user import UserCreate
-from app.tests.utils.user import user_authentication_headers
-from app.tests.utils.utils import get_server_api, random_lower_string
+from fastapi_demo import crud
+from fastapi_demo.core import config
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.user import UserCreate
+from fastapi_demo.tests.utils.user import user_authentication_headers
+from fastapi_demo.tests.utils.utils import get_server_api, random_lower_string
 
 
 def test_get_users_superuser_me(superuser_token_headers):

@@ -3,7 +3,7 @@ import logging
 import requests
 from requests.auth import HTTPBasicAuth
 
-from app.core.config import (
+from fastapi_demo.core.config import (
     COUCHBASE_FTS_MEMORY_QUOTA_MB,
     COUCHBASE_INDEX_MEMORY_QUOTA_MB,
     COUCHBASE_MEMORY_QUOTA_MB,

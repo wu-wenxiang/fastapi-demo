@@ -1,9 +1,9 @@
 from couchbase.bucket import Bucket
 from couchbase.n1ql import CONSISTENCY_REQUEST, N1QLQuery
 
-from app.core import config
-from app.models.config import ITEM_DOC_TYPE
-from app.models.item import ItemCreate, ItemInDB, ItemUpdate
+from fastapi_demo.core import config
+from fastapi_demo.models.config import ITEM_DOC_TYPE
+from fastapi_demo.models.item import ItemCreate, ItemInDB, ItemUpdate
 
 from . import utils
 

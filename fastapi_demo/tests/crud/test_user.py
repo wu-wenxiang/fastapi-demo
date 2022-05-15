@@ -1,10 +1,10 @@
 from fastapi.encoders import jsonable_encoder
 
-from app import crud
-from app.db.database import get_default_bucket
-from app.models.role import RoleEnum
-from app.models.user import UserCreate
-from app.tests.utils.utils import random_lower_string
+from fastapi_demo import crud
+from fastapi_demo.db.database import get_default_bucket
+from fastapi_demo.models.role import RoleEnum
+from fastapi_demo.models.user import UserCreate
+from fastapi_demo.tests.utils.utils import random_lower_string
 
 
 def test_create_user():

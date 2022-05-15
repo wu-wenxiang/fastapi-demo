@@ -1,7 +1,7 @@
 import requests
 
-from app.core import config
-from app.tests.utils.utils import get_server_api
+from fastapi_demo.core import config
+from fastapi_demo.tests.utils.utils import get_server_api
 
 
 def test_get_access_token():

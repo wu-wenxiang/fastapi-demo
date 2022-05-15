@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.models.config import ITEM_DOC_TYPE
+from fastapi_demo.models.config import ITEM_DOC_TYPE
 
 
 # Shared properties

@@ -8,7 +8,7 @@ import jwt
 from emails.template import JinjaTemplate
 from jwt.exceptions import InvalidTokenError
 
-from app.core import config
+from fastapi_demo.core import config
 
 password_reset_jwt_subject = "reset"
 
