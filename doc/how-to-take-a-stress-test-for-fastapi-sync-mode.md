@@ -2,37 +2,12 @@
 
 ## 压力测试样例代码
 
-```python
-from fastapi import APIRouter
-import time
-import asyncio
+[stress_test_fastapi_async_sync.py](stress_test_fastapi_async_sync.py)
 
-app = APIRouter()
+运行：
 
-
-@app.get("/a")
-async def a():
-    time.sleep(1)
-    return {"message": "异步模式，但是同步执行 sleep 函数，执行过程是串行的"}
-
-
-@app.get("/b")
-async def b():
-    loop = asyncio.get_event_loop()
-    await loop.run_in_executor(None, time.sleep, 1)
-    return {"message": "线程池中运行 sleep 函数"}
-
-
-@app.get("/c")
-async def c():
-    await asyncio.sleep(1)
-    return {"message": "异步模式，且异步执行 sleep 函数"}
-
-
-@app.get("/d")
-def d():
-    time.sleep(1)
-    return {"message": "同步模式，但是 FastAPI 会放在线程池中运行，所以很快"}
+```bash
+uvicorn stress_test_fastapi_async_sync:app --reload
 ```
 
 ## 压力测试结果：
