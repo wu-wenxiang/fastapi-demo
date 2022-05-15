@@ -356,4 +356,6 @@ fastapi-demo
 
 重命名为 `fastapi-demo-template`
 
-### 2.2 
+### 2.2 路由和控制器函数
+
+新建 `fastapi_demo` 目录，复制 `fastapi-demo-template/backend/app/app/*` 到其中。
