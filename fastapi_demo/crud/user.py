@@ -1,6 +1,4 @@
 import requests
-from couchbase.bucket import Bucket
-from couchbase.n1ql import CONSISTENCY_REQUEST, N1QLQuery
 from fastapi.encoders import jsonable_encoder
 
 from fastapi_demo.core import config
@@ -19,26 +17,14 @@ def get_doc_id(username: str):
     return f"{USERPROFILE_DOC_TYPE}::{username}"
 
 
-def get(bucket: Bucket, *, username: str):
+def get(*, username: str):
     doc_id = get_doc_id(username)
-    return utils.get_doc(bucket=bucket, doc_id=doc_id, doc_model=UserInDB)
+    return utils.get_doc(doc_id=doc_id, doc_model=UserInDB)
 
 
-def get_by_email(bucket: Bucket, *, email: str):
-    query_str = f"SELECT *, META().id as doc_id FROM {config.COUCHBASE_BUCKET_NAME} WHERE type = $type AND email = $email;"
-    q = N1QLQuery(
-        query_str,
-        bucket=config.COUCHBASE_BUCKET_NAME,
-        type=USERPROFILE_DOC_TYPE,
-        email=email,
-    )
-    q.consistency = CONSISTENCY_REQUEST
-    doc_results = bucket.n1ql_query(q)
-    users = utils.doc_results_to_model(doc_results, doc_model=UserInDB)
-    if not users:
-        return None
-    return users[0]
-
+def get_by_email(*, email: str):
+    return None
+    
 
 def insert_sync_gateway(user: UserSyncIn):
     name = user.name
@@ -59,43 +45,35 @@ def update_sync_gateway(user: UserSyncIn):
     return response.status_code == 200 or response.status_code == 201
 
 
-def upsert_in_db(bucket: Bucket, *, user_in: UserCreate, persist_to=0):
+def upsert_in_db(*, user_in: UserCreate, persist_to=0):
     user_doc_id = get_doc_id(user_in.username)
     passwordhash = get_password_hash(user_in.password)
     user = UserInDB(**user_in.dict(), hashed_password=passwordhash)
     doc_data = jsonable_encoder(user)
-    with bucket.durability(
-        persist_to=persist_to, timeout=config.COUCHBASE_DURABILITY_TIMEOUT_SECS
-    ):
-        bucket.upsert(user_doc_id, doc_data)
     return user
 
 
-def update_in_db(bucket: Bucket, *, username: str, user_in: UserUpdate, persist_to=0):
+def update_in_db(*, username: str, user_in: UserUpdate, persist_to=0):
     user_doc_id = get_doc_id(username)
-    stored_user = get(bucket, username=username)
+    stored_user = get(username=username)
     stored_user = stored_user.copy(update=user_in.dict(skip_defaults=True))
     if user_in.password:
         passwordhash = get_password_hash(user_in.password)
         stored_user.hashed_password = passwordhash
     data = jsonable_encoder(stored_user)
-    with bucket.durability(
-        persist_to=persist_to, timeout=config.COUCHBASE_DURABILITY_TIMEOUT_SECS
-    ):
-        bucket.upsert(user_doc_id, data)
     return stored_user
 
 
-def upsert(bucket: Bucket, *, user_in: UserCreate, persist_to=0):
-    user = upsert_in_db(bucket, user_in=user_in, persist_to=persist_to)
+def upsert(*, user_in: UserCreate, persist_to=0):
+    user = upsert_in_db(user_in=user_in, persist_to=persist_to)
     user_in_sync = UserSyncIn(**user_in.dict(), name=user_in.username)
     assert insert_sync_gateway(user_in_sync)
     return user
 
 
-def update(bucket: Bucket, *, username: str, user_in: UserUpdate, persist_to=0):
+def update(*, username: str, user_in: UserUpdate, persist_to=0):
     user = update_in_db(
-        bucket, username=username, user_in=user_in, persist_to=persist_to
+        username=username, user_in=user_in, persist_to=persist_to
     )
     user_in_sync_data = user.dict()
     user_in_sync_data.update({"name": user.username})
@@ -106,8 +84,8 @@ def update(bucket: Bucket, *, username: str, user_in: UserUpdate, persist_to=0):
     return user
 
 
-def authenticate(bucket: Bucket, *, username: str, password: str):
-    user = get(bucket, username=username)
+def authenticate(*, username: str, password: str):
+    user = get(username=username)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):
@@ -125,9 +103,8 @@ def is_superuser(user: UserInDB):
     )
 
 
-def get_multi(bucket: Bucket, *, skip=0, limit=100):
+def get_multi(*, skip=0, limit=100):
     users = utils.get_docs(
-        bucket=bucket,
         doc_type=USERPROFILE_DOC_TYPE,
         doc_model=UserInDB,
         skip=skip,
@@ -136,9 +113,8 @@ def get_multi(bucket: Bucket, *, skip=0, limit=100):
     return users
 
 
-def search(bucket: Bucket, *, query_string: str, skip=0, limit=100):
+def search(*, query_string: str, skip=0, limit=100):
     users = utils.search_get_docs(
-        bucket=bucket,
         query_string=query_string,
         index_name=full_text_index_name,
         doc_model=UserInDB,
@@ -150,10 +126,9 @@ def search(bucket: Bucket, *, query_string: str, skip=0, limit=100):
 
 
 def search_get_search_results_to_docs(
-    bucket: Bucket, *, query_string: str, skip=0, limit=100
+    *, query_string: str, skip=0, limit=100
 ):
     users = utils.search_by_type_get_results_to_docs(
-        bucket=bucket,
         query_string=query_string,
         index_name=full_text_index_name,
         doc_type=USERPROFILE_DOC_TYPE,

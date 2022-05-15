@@ -50,7 +50,7 @@ def search_items(
     """
     bucket = get_default_bucket()
     if crud.user.is_superuser(current_user):
-        docs = crud.item.search(bucket=bucket, query_string=q, skip=skip, limit=limit)
+        docs = crud.item.search(query_string=q, skip=skip, limit=limit)
     else:
         docs = crud.item.search_with_owner(
             bucket=bucket,
@@ -88,7 +88,7 @@ def update_item(
     Update an item.
     """
     bucket = get_default_bucket()
-    doc = crud.item.get(bucket=bucket, id=id)
+    doc = crud.item.get(id=id)
     if not doc:
         raise HTTPException(status_code=404, detail="Item not found")
     if not crud.user.is_superuser(current_user) and (
@@ -107,7 +107,7 @@ def read_item(id: str, current_user: UserInDB = Depends(get_current_active_user)
     Get item by ID.
     """
     bucket = get_default_bucket()
-    doc = crud.item.get(bucket=bucket, id=id)
+    doc = crud.item.get(id=id)
     if not doc:
         raise HTTPException(status_code=404, detail="Item not found")
     if not crud.user.is_superuser(current_user) and (
@@ -123,12 +123,12 @@ def delete_item(id: str, current_user: UserInDB = Depends(get_current_active_use
     Delete an item by ID.
     """
     bucket = get_default_bucket()
-    doc = crud.item.get(bucket=bucket, id=id)
+    doc = crud.item.get(id=id)
     if not doc:
         raise HTTPException(status_code=404, detail="Item not found")
     if not crud.user.is_superuser(current_user) and (
         doc.owner_username != current_user.username
     ):
         raise HTTPException(status_code=400, detail="Not enough permissions")
-    doc = crud.item.remove(bucket=bucket, id=id)
+    doc = crud.item.remove(id=id)
     return doc

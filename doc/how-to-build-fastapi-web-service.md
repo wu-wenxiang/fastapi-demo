@@ -359,3 +359,7 @@ fastapi-demo
 ### 2.2 路由和控制器函数
 
 新建 `fastapi_demo` 目录，复制 `fastapi-demo-template/backend/app/app/*` 到其中。
+
+couchbase 估计依赖了 2 版本的，有点老了，去掉这个。再加上 pyproject.toml（就是 template 里的 Pipfile），config 里加上默认的 PROJECT_NAME。
+
+然后用 `.vscode/launch.json` 可以把系统跑起来了，访问：`http://127.0.0.1:8000/docs`

@@ -42,7 +42,7 @@ def search_users(
     users with email `johndoe@example.com`, `johndid@example.net`, etc.
     """
     bucket = get_default_bucket()
-    users = crud.user.search(bucket=bucket, query_string=q, skip=skip, limit=limit)
+    users = crud.user.search(query_string=q, skip=skip, limit=limit)
     return users
 
 

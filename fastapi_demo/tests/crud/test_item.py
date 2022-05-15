@@ -33,7 +33,7 @@ def test_get_item():
     item = crud.item.upsert(
         bucket=bucket, id=id, doc_in=item_in, owner_username=user.username, persist_to=1
     )
-    stored_item = crud.item.get(bucket=bucket, id=id)
+    stored_item = crud.item.get(id=id)
     assert item.id == stored_item.id
     assert item.title == stored_item.title
     assert item.description == stored_item.description
@@ -76,8 +76,8 @@ def test_delete_item():
     item = crud.item.upsert(
         bucket=bucket, id=id, doc_in=item_in, owner_username=user.username, persist_to=1
     )
-    item2 = crud.item.remove(bucket=bucket, id=id, persist_to=1)
-    item3 = crud.item.get(bucket=bucket, id=id)
+    item2 = crud.item.remove(id=id, persist_to=1)
+    item3 = crud.item.get(id=id)
     assert item3 is None
     assert item2.id == id
     assert item2.title == title
